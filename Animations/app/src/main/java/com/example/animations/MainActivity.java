@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView homerImageView = (ImageView)findViewById(R.id.homerImageView);
         ImageView bartImageView = (ImageView)findViewById(R.id.bartImageView);
 
-
+/*
         if (isHomerShowing){
             isHomerShowing = false;
             homerImageView.animate().alpha(0).setDuration(2000);
@@ -24,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
             isHomerShowing = true;
             homerImageView.animate().alpha(1).setDuration(2000);
             bartImageView.animate().alpha(0).setDuration(2000);
-        }
+        }*/
+
+        homerImageView.animate().translationYBy(1000).setDuration(500);
 
     }
 
