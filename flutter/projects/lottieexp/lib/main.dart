@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         ),
         body: Center(
           child: Lottie.network(
-              'https://assets5.lottiefiles.com/packages/lf20_xiussssy.json'),
+              'https://assets5.lottiefiles.com/private_files/lf30_wemstiyo.json'),
         ),
       ),
     );
