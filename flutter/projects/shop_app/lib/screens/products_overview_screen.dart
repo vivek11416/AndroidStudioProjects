@@ -1,21 +1,47 @@
 import 'package:flutter/material.dart';
 import '../widgets/products_grid.dart';
+import 'package:provider/provider.dart';
+import '../providers/products.dart';
 
-import 'dart:ui';
+enum FilterOptions {
+  Favorites,
+  All,
+}
 
 class ProductsOverviewScreen extends StatelessWidget {
   //const ProductsOverviewScreen({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var pixelRatio = window.devicePixelRatio;
+    final productsContainer = Provider.of<Products>(context, listen: false);
+
     //Size in logical pixels
-    var logicalScreenSize = window.physicalSize / pixelRatio;
-    var logicalWidth = logicalScreenSize.width;
-    var logicalHeight = logicalScreenSize.height;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('MyShop'),
+        actions: <Widget>[
+          PopupMenuButton(
+            onSelected: (FilterOptions selectedValue) {
+              if (selectedValue == FilterOptions.Favorites) {
+                productsContainer.showFavoritesOnly();
+              } else {
+                productsContainer.showAll();
+              }
+            },
+            icon: Icon(Icons.more_vert),
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: Text('Only Favorites'),
+                value: FilterOptions.Favorites,
+              ),
+              PopupMenuItem(
+                child: Text('Show all'),
+                value: FilterOptions.All,
+              ),
+            ],
+          ),
+        ],
       ),
       body: ProductsGrid(),
     );
