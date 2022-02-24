@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
-import '../widgets/products_grid.dart';
 import 'package:provider/provider.dart';
-import '../providers/products.dart';
+import '../widgets/products_grid.dart';
+
+import 'package:badges/badges.dart';
+import '../providers/cart.dart';
 
 enum FilterOptions {
   Favorites,
   All,
 }
 
-class ProductsOverviewScreen extends StatelessWidget {
-  //const ProductsOverviewScreen({ Key? key }) : super(key: key);
+class ProductsOverviewScreen extends StatefulWidget {
+  @override
+  State<ProductsOverviewScreen> createState() => _ProductsOverviewScreenState();
+}
 
+class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
+  //const ProductsOverviewScreen({ Key? key }) : super(key: key);
+  var _showOnlyFavorites = false;
   @override
   Widget build(BuildContext context) {
-    final productsContainer = Provider.of<Products>(context, listen: false);
+    // final productsContainer = Provider.of<Products>(context, listen: false);
 
     //Size in logical pixels
 
@@ -23,11 +30,13 @@ class ProductsOverviewScreen extends StatelessWidget {
         actions: <Widget>[
           PopupMenuButton(
             onSelected: (FilterOptions selectedValue) {
-              if (selectedValue == FilterOptions.Favorites) {
-                productsContainer.showFavoritesOnly();
-              } else {
-                productsContainer.showAll();
-              }
+              setState(() {
+                if (selectedValue == FilterOptions.Favorites) {
+                  _showOnlyFavorites = true;
+                } else {
+                  _showOnlyFavorites = false;
+                }
+              });
             },
             icon: Icon(Icons.more_vert),
             itemBuilder: (context) => [
@@ -41,9 +50,25 @@ class ProductsOverviewScreen extends StatelessWidget {
               ),
             ],
           ),
+          Consumer<Cart>(
+            builder: (_, cart, ch) => Badge(
+              child: ch,
+              badgeContent: Text(cart.itemCount.toString()),
+              position: BadgePosition.topEnd(top: 0, end: 40),
+              padding: EdgeInsets.all(5),
+              //shape: BadgeShape.square,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: IconButton(
+              icon: Icon(
+                Icons.shopping_cart,
+              ),
+              onPressed: () {},
+            ),
+          ),
         ],
       ),
-      body: ProductsGrid(),
+      body: ProductsGrid(_showOnlyFavorites),
     );
   }
 }

@@ -6,12 +6,14 @@ import 'dart:ui';
 import '../widgets/product_item.dart';
 
 class ProductsGrid extends StatelessWidget {
+  final bool showFavs;
+  ProductsGrid(this.showFavs);
   var pixelRatio = window.devicePixelRatio;
 
   @override
   Widget build(BuildContext context) {
     final ProductsData = Provider.of<Products>(context);
-    final products = ProductsData.items;
+    final products = showFavs ? ProductsData.favItems : ProductsData.items;
     var logicalScreenSize = window.physicalSize / pixelRatio;
     var logicalWidth = logicalScreenSize.width;
 
