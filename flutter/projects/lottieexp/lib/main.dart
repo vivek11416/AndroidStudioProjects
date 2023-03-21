@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Lottie Example',
+            'Lottie Example 2',
           ),
         ),
         body: Container(
