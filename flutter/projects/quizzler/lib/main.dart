@@ -1,97 +1,158 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:ui' as ui;
 
-void main() => runApp(Quizzler());
+void main() {
+  runApp(const MyWidget());
+}
 
-class Quizzler extends StatelessWidget {
+class MyWidget extends StatelessWidget {
+  const MyWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  List<Icon> answerList = [];
+  int Total_Score = 0;
+  @override
+  Widget build(BuildContext context) {
+    //print(MediaQueryData.fromWindow(ui.window).size.height / 3);
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.grey.shade900,
         body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
-            child: QuizPage(),
-          ),
+          child: (answerList.length < 11)
+              ? Column(
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: [
+                    if (answerList.length < 11)
+                      SizedBox(
+                        height:
+                            MediaQueryData.fromWindow(ui.window).size.height /
+                                1.35,
+                        child: Center(
+                          child: Text(
+                            'the score  is $Total_Score',
+                            style: TextStyle(color: Colors.black),
+                          ), //Text
+                        ),
+                      ),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 8),
+                      width: double.infinity - 5,
+                      height: 50,
+                      child: TextButton(
+                        onPressed: () {
+                          setState(
+                            () {
+                              Total_Score++;
+                              answerList.add(
+                                Icon(
+                                  Icons.check,
+                                  color: Colors.green,
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 4.0, horizontal: 26.0),
+                          child: Text(
+                            'True',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.green),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 8),
+                      width: double.infinity - 5,
+                      height: 50,
+                      child: TextButton(
+                        onPressed: () {
+                          setState(
+                            () {
+                              Total_Score--;
+                              answerList.add(
+                                Icon(
+                                  Icons.close,
+                                  color: Colors.red,
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Text(
+                          'False',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.red),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: new EdgeInsets.all(12.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: answerList,
+                      ),
+                    )
+                  ],
+                )
+              : Column(children: [
+                  Text(
+                    'Quiz is complete !',
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      setState(
+                        () {
+                          Total_Score = 0;
+                          answerList.clear();
+                        },
+                      );
+                    },
+                    child: Text(
+                      'Restart',
+                    ),
+                  )
+                ]),
         ),
       ),
     );
   }
 }
-
-class QuizPage extends StatefulWidget {
-  @override
-  _QuizPageState createState() => _QuizPageState();
-}
-
-class _QuizPageState extends State<QuizPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Expanded(
-          flex: 5,
-          child: Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Center(
-              child: Text(
-                'This is where the question text will go.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 25.0,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.all(15.0),
-            child: FlatButton(
-              textColor: Colors.white,
-              color: Colors.green,
-              child: Text(
-                'True',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0,
-                ),
-              ),
-              onPressed: () {
-                //The user picked true.
-              },
-            ),
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.all(15.0),
-            child: FlatButton(
-              color: Colors.red,
-              child: Text(
-                'False',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.white,
-                ),
-              ),
-              onPressed: () {
-                //The user picked false.
-              },
-            ),
-          ),
-        ),
-        //TODO: Add a Row here as your score keeper
-      ],
-    );
-  }
-}
-
-/*
-question1: 'You can lead a cow down stairs but not up stairs.', false,
-question2: 'Approximately one quarter of human bones are in the feet.', true,
-question3: 'A slug\'s blood is green.', true,
-*/
