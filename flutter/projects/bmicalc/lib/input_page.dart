@@ -1,12 +1,15 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'icon_content.dart';
 import 'reusable_card.dart';
+import 'constants.dart';
 
-const bottomContainerHeight = 60.0;
-const activeCardColor = Color(0xFF1D1E33);
-const inActiveCardColor = Color(0xFF111328);
-const bottomContainerColor = Color(0xFFEB1555);
+enum Gender {
+  male,
+  female,
+}
 
 class InputPage extends StatefulWidget {
   @override
@@ -14,68 +17,54 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  Color maleCardColor = inActiveCardColor;
-  Color femaleCardColor = inActiveCardColor;
-
-  void changeCardColor(int gender) {
-    if (gender == 1) {
-      if (maleCardColor == inActiveCardColor) {
-        maleCardColor = activeCardColor;
-        femaleCardColor = inActiveCardColor;
-      } else {
-        maleCardColor = inActiveCardColor;
-      }
-    } else {
-      if (femaleCardColor == inActiveCardColor) {
-        femaleCardColor = activeCardColor;
-        maleCardColor = inActiveCardColor;
-      } else {
-        femaleCardColor = inActiveCardColor;
-      }
-    }
-  }
+  Gender? selectedGender;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('BMI CALCULATOR'),
+        title: const Text('BMI CALCULATOR'),
         centerTitle: true,
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: Row(
               children: [
                 Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        changeCardColor(1);
-                      });
+                  child: containersCard(
+                    onPress: () {
+                      setState(
+                        () {
+                          selectedGender = Gender.male;
+                        },
+                      );
                     },
-                    child: containersCard(
-                      color: maleCardColor,
-                      cardChild: iconContent(
-                        iconIm: FontAwesomeIcons.mars,
-                        iconText: 'MALE',
-                      ),
+                    color: selectedGender == Gender.male
+                        ? kActiveCardColor
+                        : kInActiveCardColor,
+                    cardChild: const iconContent(
+                      iconIm: FontAwesomeIcons.mars,
+                      iconText: 'MALE',
+                      iconTextStyle: kLabelTextStyle,
                     ),
                   ),
                 ),
                 Expanded(
-                  child: GestureDetector(
-                    onTap: () {
+                  child: containersCard(
+                    onPress: () {
                       setState(() {
-                        changeCardColor(2);
+                        selectedGender = Gender.female;
                       });
                     },
-                    child: containersCard(
-                      color: femaleCardColor,
-                      cardChild: iconContent(
-                        iconIm: FontAwesomeIcons.venus,
-                        iconText: 'FEMALE',
-                      ),
+                    color: selectedGender == Gender.female
+                        ? kActiveCardColor
+                        : kInActiveCardColor,
+                    cardChild: const iconContent(
+                      iconIm: FontAwesomeIcons.venus,
+                      iconText: 'FEMALE',
+                      iconTextStyle: kLabelTextStyle,
                     ),
                   ),
                 ),
@@ -84,7 +73,35 @@ class _InputPageState extends State<InputPage> {
           ),
           Expanded(
             child: containersCard(
-              color: activeCardColor,
+              color: kActiveCardColor,
+              cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'HEIGHT',
+                    style: kLabelTextStyle,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
+                      const Text(
+                        '180',
+                        style: kNumberStyle,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.all(2.0),
+                        child: Text(
+                          'cm',
+                          style: kLabelTextStyle,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -92,22 +109,22 @@ class _InputPageState extends State<InputPage> {
               children: [
                 Expanded(
                   child: containersCard(
-                    color: activeCardColor,
+                    color: kActiveCardColor,
                   ),
                 ),
                 Expanded(
                   child: containersCard(
-                    color: activeCardColor,
+                    color: kActiveCardColor,
                   ),
                 ),
               ],
             ),
           ),
           Container(
-            color: bottomContainerColor,
-            margin: EdgeInsets.only(top: 10.0),
+            color: kBottomContainerColor,
+            margin: const EdgeInsets.only(top: 10.0),
             width: double.infinity,
-            height: bottomContainerHeight,
+            height: kBottomContainerHeight,
           )
         ],
       ),

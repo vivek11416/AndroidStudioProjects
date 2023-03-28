@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'constants.dart';
 
 class iconContent extends StatelessWidget {
-  const iconContent({super.key, required this.iconIm, required this.iconText});
+  const iconContent({
+    super.key,
+    required this.iconIm,
+    required this.iconText,
+    required this.iconTextStyle,
+  });
   final IconData iconIm;
   final String iconText;
+  final TextStyle iconTextStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +26,7 @@ class iconContent extends StatelessWidget {
         ),
         Text(
           iconText,
-          style: TextStyle(
-            fontSize: 18.0,
-            color: Color(0xFF8D8E98),
-          ),
+          style: iconTextStyle,
         )
       ],
     );
