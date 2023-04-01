@@ -9,14 +9,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.10.0"
-  bluetooth:
-    dependency: "direct main"
-    description:
-      name: bluetooth
-      sha256: "792b85c326b9472418e006fff01543895b7d4719febfc2e474b700ff5b2806c1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -33,14 +25,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.1"
-  charcode:
-    dependency: transitive
-    description:
-      name: charcode
-      sha256: fb98c0f6d12c920a02ee2d998da788bca066ca5f148492b7085ee23372b12306
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.1"
   clock:
     dependency: transitive
     description:
@@ -61,18 +45,10 @@ packages:
     dependency: transitive
     description:
       name: convert
-      sha256: "3fa83bc417e26f1d55814443a603747d48e3cdf55b2f4fea27dea8e9224dcefd"
+      sha256: "0f08b14755d163f6e2134cb58222dd25ea2a2ee8a195e53983d57c075324d592"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.1"
-  crypto:
-    dependency: transitive
-    description:
-      name: crypto
-      sha256: "3ce628f3c6a7144be6c524dbb20ca5af52fa59c850c587bf5e52cd70ece8e7e8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.5"
+    version: "3.1.1"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -93,15 +69,31 @@ packages:
     dependency: transitive
     description:
       name: fixnum
-      sha256: "3b298dacb1898a8f5fddec19388b899b0f13195066b89fa66391e5e92f6c2052"
+      sha256: "25517a4deb0c03aa0f32fd12db525856438902d9c16536311e76cdc57b31d7d1"
       url: "https://pub.dev"
     source: hosted
-    version: "0.10.11"
+    version: "1.1.0"
   flutter:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_blue_plus:
+    dependency: "direct main"
+    description:
+      name: flutter_blue_plus
+      sha256: "4e49b45d2f1ec9855826ed0af7d2b78b7d2a3e5743b3ae72aec59eb3790356d9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.0"
+  flutter_bluetooth_serial:
+    dependency: "direct main"
+    description:
+      name: flutter_bluetooth_serial
+      sha256: "248608f777e92e867b642c88327c030fd5eacafb9841d4aa3e34d04ae314de20"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.2"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -163,14 +155,70 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.2"
+  permission_handler:
+    dependency: "direct main"
+    description:
+      name: permission_handler
+      sha256: "33c6a1253d1f95fd06fa74b65b7ba907ae9811f9d5c1d3150e51417d04b8d6a8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "10.2.0"
+  permission_handler_android:
+    dependency: transitive
+    description:
+      name: permission_handler_android
+      sha256: "8028362b40c4a45298f1cbfccd227c8dd6caf0e27088a69f2ba2ab15464159e2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "10.2.0"
+  permission_handler_apple:
+    dependency: transitive
+    description:
+      name: permission_handler_apple
+      sha256: ee96ac32f5a8e6f80756e25b25b9f8e535816c8e6665a96b6d70681f8c4f7e85
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.0.8"
+  permission_handler_platform_interface:
+    dependency: transitive
+    description:
+      name: permission_handler_platform_interface
+      sha256: "68abbc472002b5e6dfce47fe9898c6b7d8328d58b5d2524f75e277c07a97eb84"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.9.0"
+  permission_handler_windows:
+    dependency: transitive
+    description:
+      name: permission_handler_windows
+      sha256: f67cab14b4328574938ecea2db3475dad7af7ead6afab6338772c5f88963e38b
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.2"
+  plugin_platform_interface:
+    dependency: transitive
+    description:
+      name: plugin_platform_interface
+      sha256: "6a2128648c854906c53fa8e33986fc0247a1116122f9534dd20e3ab9e16a32bc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.4"
   protobuf:
     dependency: transitive
     description:
       name: protobuf
-      sha256: "067ddf1a361d18f30a73c9f90eca1cb8e9f3b53f5936eb3e9ac5cb3b8482b099"
+      sha256: "01dd9bd0fa02548bf2ceee13545d4a0ec6046459d847b6b061d8a27237108a08"
       url: "https://pub.dev"
     source: hosted
-    version: "0.13.16+1"
+    version: "2.1.0"
+  rxdart:
+    dependency: transitive
+    description:
+      name: rxdart
+      sha256: "0c7c0cedd93788d996e33041ffecda924cc54389199cde4e6a34b440f50044cb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.27.7"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -232,14 +280,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
-  uuid_enhanced:
-    dependency: transitive
-    description:
-      name: uuid_enhanced
-      sha256: d56bea310142e2eaf4bd2143d9550c44d676f521d9c48d3fb4c0977e5f93b400
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.2"
   vector_math:
     dependency: transitive
     description:
@@ -248,5 +288,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  wear:
+    dependency: "direct main"
+    description:
+      name: wear
+      sha256: b8aa77aff3351d301561a665d94416ed929dfa69ab898c5255d19f4a478eb27a
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
 sdks:
   dart: ">=2.19.2 <3.0.0"
+  flutter: ">=2.8.0"
