@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "228776985445",
+    "project_id": "flash-chat-d9034",
+    "storage_bucket": "flash-chat-d9034.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228776985445:android:5f048dec1e9d823d03d78c",
+        "android_client_info": {
+          "package_name": "com.vivek.example.flashchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "228776985445-sncft4t94lnaseunfn3a2vb06etuchde.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUPxiwBlrgQWbNU8yBsErLPha0E_ZNsbg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "228776985445-sncft4t94lnaseunfn3a2vb06etuchde.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
