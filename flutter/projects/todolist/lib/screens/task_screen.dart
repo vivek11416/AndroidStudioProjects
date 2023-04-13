@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:todolist/models/tasks_data.dart';
 import 'package:todolist/widgets/task_list.dart';
-import 'package:todolist/widgets/task_tile.dart';
+import 'package:provider/provider.dart';
 import 'package:todolist/screens/add_task_screen.dart';
 
 class TaskScreen extends StatelessWidget {
-  const TaskScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,6 +16,7 @@ class TaskScreen extends StatelessWidget {
         ),
         onPressed: () {
           showModalBottomSheet(
+            //isScrollControlled: true,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(20.0),
@@ -63,7 +63,9 @@ class TaskScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '12 tasks',
+                    Provider.of<TaskData>(context).taskCount == 1
+                        ? '${Provider.of<TaskData>(context).taskCount} task'
+                        : '${Provider.of<TaskData>(context).taskCount} tasks',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
