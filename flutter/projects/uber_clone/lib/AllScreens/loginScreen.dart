@@ -1,8 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
+import 'package:uber_clone/AllScreens/registrationScreen.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
+  static const String idScreen = "login";
 
+  TextEditingController emailTextEditingController = TextEditingController();
+  TextEditingController passwordTextEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,7 +16,7 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 85.0,
+              height: 35.0,
             ),
             Center(
               child: Image(
@@ -35,6 +40,7 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 children: [
                   TextField(
+                    controller: emailTextEditingController,
                     scrollPadding: const EdgeInsets.only(bottom: 150),
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
@@ -56,6 +62,7 @@ class LoginScreen extends StatelessWidget {
                     height: 20,
                   ),
                   TextField(
+                    controller: passwordTextEditingController,
                     //scrollPadding: const EdgeInsets.only(bottom: 50),
                     keyboardType: TextInputType.emailAddress,
                     obscureText: true,
@@ -86,7 +93,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      print('Login Screen');
+                      loginAndAuthenticateUser(context);
                     },
                     child: Container(
                       height: 50.0,
@@ -113,7 +120,8 @@ class LoginScreen extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
-                    print('Register page');
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, RegistrationScreen.idScreen, (route) => false);
                   },
                   child: Text(
                     'Register Here',
@@ -128,5 +136,30 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  void loginAndAuthenticateUser(BuildContext context) async {
+    final User? firebaseUser = (await _firebaseAuth
+            .signInWithEmailAndPassword(
+                email: emailTextEditingController.text,
+                password: passwordTextEditingController.text)
+            .catchError((errMsg) {
+      displayToastMessage("Error: " + errMsg.toString(), context);
+    }))
+        .user;
+
+    if (firebaseUser != null) {
+      //user signed in  successfully
+
+      usersRef.child(firebaseUser.uid).set(userDataMap);
+      displayToastMessage(
+          "Congratulations , your account has been created", context);
+      Navigator.pushNamedAndRemoveUntil(
+          context, MainScreen.idScreen, (route) => false);
+    } else {
+      //user unable to sign in
+      displayToastMessage("New User account has not been created", context);
+    }
   }
 }
