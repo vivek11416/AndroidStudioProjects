@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 import "package:uber_clone/AllScreens/loginScreen.dart";
 import 'package:fluttertoast/fluttertoast.dart';
 import "package:uber_clone/AllScreens/mainScreen.dart";
+import "package:uber_clone/AllWidgets/progressDialog.dart";
 import "package:uber_clone/main.dart";
 
 const double fieldTextSize = 18;
@@ -24,7 +25,7 @@ class RegistrationScreen extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 45.0,
+              height: 55.0,
             ),
             Center(
               child: Image(
@@ -209,12 +210,20 @@ class RegistrationScreen extends StatelessWidget {
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   void registerNewUser(BuildContext context) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return ProgressDialog(message: "Registering User, Please wait....");
+        });
     final User? firebaseUser = (await _firebaseAuth
             .createUserWithEmailAndPassword(
                 email: emailTextEditingController.text,
                 password: passwordTextEditingController.text)
             .catchError((errMsg) {
-      displayToastMessage("Error: " + errMsg.toString(), context);
+      Navigator.pop(context);
+      displayToastMessage("Error: " + errMsg.toString(), context,
+          duration: Toast.LENGTH_LONG);
     }))
         .user;
 
@@ -232,12 +241,14 @@ class RegistrationScreen extends StatelessWidget {
       Navigator.pushNamedAndRemoveUntil(
           context, MainScreen.idScreen, (route) => false);
     } else {
+      Navigator.pop(context);
       //error occured in creating user
       displayToastMessage("New User account has not been created", context);
     }
   }
 }
 
-displayToastMessage(String message, BuildContext context) {
-  Fluttertoast.showToast(msg: message);
+displayToastMessage(String message, BuildContext context,
+    {Toast duration: Toast.LENGTH_SHORT}) {
+  Fluttertoast.showToast(msg: message, toastLength: duration);
 }

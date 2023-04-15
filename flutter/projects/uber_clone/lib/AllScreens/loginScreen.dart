@@ -1,6 +1,13 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import "package:flutter/material.dart";
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:uber_clone/AllScreens/mainScreen.dart';
 import 'package:uber_clone/AllScreens/registrationScreen.dart';
+import 'package:uber_clone/AllWidgets/progressDialog.dart';
+import 'package:uber_clone/main.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -84,6 +91,7 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     height: 15,
                   ),
+                  //CircularProgressIndicator(),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.black87,
@@ -93,7 +101,14 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      loginAndAuthenticateUser(context);
+                      if (!emailTextEditingController.text.contains("@")) {
+                        displayToastMessage(
+                            "Email address is not valid", context);
+                      } else if (passwordTextEditingController.text.isEmpty) {
+                        displayToastMessage("Password is mandatory.", context);
+                      } else {
+                        loginAndAuthenticateUser(context);
+                      }
                     },
                     child: Container(
                       height: 50.0,
@@ -140,26 +155,45 @@ class LoginScreen extends StatelessWidget {
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   void loginAndAuthenticateUser(BuildContext context) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return ProgressDialog(message: "Authenticating, Please wait....");
+        });
     final User? firebaseUser = (await _firebaseAuth
             .signInWithEmailAndPassword(
                 email: emailTextEditingController.text,
                 password: passwordTextEditingController.text)
             .catchError((errMsg) {
-      displayToastMessage("Error: " + errMsg.toString(), context);
+      Navigator.pop(context);
+      displayToastMessage("Error: " + errMsg.toString(), context,
+          duration: Toast.LENGTH_LONG);
     }))
         .user;
 
     if (firebaseUser != null) {
       //user signed in  successfully
 
-      usersRef.child(firebaseUser.uid).set(userDataMap);
-      displayToastMessage(
-          "Congratulations , your account has been created", context);
-      Navigator.pushNamedAndRemoveUntil(
-          context, MainScreen.idScreen, (route) => false);
+      usersRef.child(firebaseUser.uid).once().then((event) {
+        final snap = event.snapshot;
+        if (snap.value != null) {
+          print("inside");
+          Navigator.pushNamedAndRemoveUntil(
+              context, MainScreen.idScreen, (route) => false);
+          displayToastMessage("You are logged in.", context);
+        } else {
+          Navigator.pop(context);
+          _firebaseAuth.signOut();
+          displayToastMessage(
+              "No record exist for this user, Please create new account.",
+              context);
+        }
+      });
     } else {
+      Navigator.pop(context);
       //user unable to sign in
-      displayToastMessage("New User account has not been created", context);
+      displayToastMessage("Error Occured, Cannot be signed in.", context);
     }
   }
 }
