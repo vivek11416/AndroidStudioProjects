@@ -26,6 +26,17 @@ class _MainScreenState extends State<MainScreen> {
   var geoLocator = Geolocator();
   double bottomPaddingOfMap = 0;
 
+  void resetHomeAddress() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    currentPosition = position;
+
+    String address =
+        await AssistantMethods.searchCoordinateAddress(position, context);
+
+    print("reset called");
+  }
+
   void locatePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -185,6 +196,9 @@ class _MainScreenState extends State<MainScreen> {
                 bottomPaddingOfMap = 300.0;
               });
               locatePosition();
+            },
+            onCameraIdle: () {
+              resetHomeAddress();
             },
           ),
 
