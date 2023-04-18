@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:uber_clone/AllScreens/loginScreen.dart';
 import 'package:uber_clone/AllScreens/registrationScreen.dart';
 import 'package:uber_clone/AllScreens/searchScreen.dart';
 import 'package:uber_clone/AllWidgets/Divider.dart';
@@ -15,6 +18,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:uber_clone/Models/directionDetails.dart';
 import 'package:swipe_to/swipe_to.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:uber_clone/configMaps.dart';
 
 // animated text constants
 
@@ -68,6 +72,45 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     });
   }
 
+  DatabaseReference? rideRequestRef;
+
+  @override
+  void initState() {
+    super.initState();
+    AssistantMethods.getCurrentOnlineUSerInfo();
+  }
+
+  void saveRideRequest() {
+    rideRequestRef =
+        FirebaseDatabase.instance.ref().child("Ride_Requests").push();
+    var pickUp = Provider.of<AppData>(context, listen: false).pickupLocation;
+    var dropOff = Provider.of<AppData>(context, listen: false).dropOffLocation;
+
+    Map pickupLocMap = {
+      "latitide": pickUp!.latitude.toString(),
+      "longitude": pickUp.longitude.toString(),
+      "pickup_address": pickUp.placeName,
+    };
+
+    Map dropOffLocMap = {
+      "latitide": dropOff!.latitude.toString(),
+      "longitude": dropOff.longitude.toString(),
+      "dropOff_address": dropOff.placeName,
+    };
+
+    Map rideInfoMap = {
+      "driver_id": "waiting",
+      "payment_method": "cash",
+      "pickup": pickupLocMap,
+      "dropoff": dropOffLocMap,
+      "created_at": DateTime.now().toString(),
+      "rider_name": userCurrentInfo!.name,
+      "rider_phone": userCurrentInfo!.phone,
+    };
+
+    rideRequestRef!.set(rideInfoMap);
+  }
+
   resetApp() {
     setState(() {
       searchContainerHeight = 300;
@@ -81,6 +124,10 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     locatePosition();
   }
 
+  void cancelRideRequest() {
+    rideRequestRef!.remove();
+  }
+
   void displayrideDetailsContainer() async {
     await getPlaceDirection();
 
@@ -88,6 +135,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       searchContainerHeight = 0;
       rideDetailsContainerHeight = 300;
     });
+    saveRideRequest();
   }
 
   void resetHomeAddress() async {
@@ -238,6 +286,20 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                 title: Text(
                   "About",
                   style: TextStyle(fontSize: 15.0),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  FirebaseAuth.instance.signOut();
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, LoginScreen.idScreen, (route) => false);
+                },
+                child: ListTile(
+                  leading: Icon(Icons.info),
+                  title: Text(
+                    "Sign Out",
+                    style: TextStyle(fontSize: 15.0),
+                  ),
                 ),
               ),
             ],
@@ -597,6 +659,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           iconOnLeftSwipe: Icons.cancel,
                           onLeftSwipe: () {
                             //print('Swiped Left');
+                            cancelRideRequest();
                             resetApp();
                           },
                           child: Container(
@@ -768,6 +831,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                   ),
                   TextButton(
                     onPressed: () {
+                      cancelRideRequest();
                       resetApp();
                     },
                     child: Text(

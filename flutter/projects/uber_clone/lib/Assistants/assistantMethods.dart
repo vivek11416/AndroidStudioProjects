@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -8,6 +10,8 @@ import 'package:uber_clone/DataHandler/appData.dart';
 import 'package:uber_clone/Models/address.dart';
 import 'package:uber_clone/Models/directionDetails.dart';
 import 'package:uber_clone/configMaps.dart';
+
+import '../Models/allUsers.dart';
 
 class AssistantMethods {
   static Future<String> searchCoordinateAddress(
@@ -72,5 +76,20 @@ class AssistantMethods {
     double totalFare = (timeTraveledFare + distanceTraveledFare) * 82;
 
     return totalFare.truncate();
+  }
+
+  static void getCurrentOnlineUSerInfo() async {
+    firebaseUser = await FirebaseAuth.instance.currentUser;
+
+    String userId = firebaseUser!.uid;
+    DatabaseReference reference =
+        FirebaseDatabase.instance.ref().child("users").child(userId);
+
+    reference.once().then((event) {
+      final dataSnapshot = event.snapshot;
+      if (dataSnapshot.value != null) {
+        userCurrentInfo = Users.fromSnapshot(dataSnapshot);
+      }
+    });
   }
 }
