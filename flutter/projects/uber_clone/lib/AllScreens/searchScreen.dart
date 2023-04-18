@@ -7,6 +7,7 @@ import "package:uber_clone/DataHandler/appData.dart";
 import "package:uber_clone/Models/address.dart";
 import "package:uber_clone/Models/placePreditions.dart";
 import "package:uber_clone/configMaps.dart";
+import 'package:flutter/services.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -28,11 +29,16 @@ class _SearchScreenState extends State<SearchScreen> {
 
     pickupTextEditingController.text = placeAddress;
 
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Colors.transparent
+            //color set to purple or set your own color
+            ));
+
     return Scaffold(
       body: Column(
         children: [
           Container(
-            height: 250.0,
+            height: 300.0,
             decoration: BoxDecoration(
               color: Colors.white,
               boxShadow: [
@@ -62,15 +68,18 @@ class _SearchScreenState extends State<SearchScreen> {
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Icon(
-                          Icons.arrow_back,
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 50.0),
+                          child: Icon(
+                            Icons.arrow_back,
+                          ),
                         ),
                       ),
                       Center(
                         child: Text(
                           "Set Drop Off",
                           style: TextStyle(
-                            fontSize: 18.0,
+                            fontSize: 30.0,
                             fontFamily: "Brand Bold",
                           ),
                         ),
@@ -78,7 +87,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     ],
                   ),
                   SizedBox(
-                    height: 30.0,
+                    height: 15.0,
                   ),
                   Row(
                     children: [
@@ -314,12 +323,14 @@ class PredictionTile extends StatelessWidget {
       address.placeName = res['result']['name'];
       address.placeId = placeId;
       address.latitude = res['result']['geometry']['location']['lat'];
-      address.latitude = res['result']['geometry']['location']['lng'];
+      address.longitude = res['result']['geometry']['location']['lng'];
 
       Provider.of<AppData>(context, listen: false)
           .updateDropOffLocationAddress(address);
       print("This is drop of loca :");
       print(address.placeName);
+
+      Navigator.pop(context, "obtainedDirection");
     }
   }
 }
