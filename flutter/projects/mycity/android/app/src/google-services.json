@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "245292006040",
+    "project_id": "mycity-c7d85",
+    "storage_bucket": "mycity-c7d85.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245292006040:android:e6854961e1923175e4eeed",
+        "android_client_info": {
+          "package_name": "com.LetsLeet.mycity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245292006040-mh1ntljgdjee5f7qp9l61g060174fptt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCm7fJPb53JPhpvvXTnuOLTESWgeARqyaU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "245292006040-mh1ntljgdjee5f7qp9l61g060174fptt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
