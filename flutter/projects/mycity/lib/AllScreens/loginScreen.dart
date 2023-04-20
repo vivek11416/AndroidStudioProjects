@@ -233,7 +233,6 @@ class LoginScreen extends StatelessWidget {
         Overlay.of(context),
         CustomSnackBar.error(
           message: errMsg.message.toString(),
-          textStyle: TextStyle(),
           maxLines: 3,
           textAlign: TextAlign.start,
         ),
@@ -257,7 +256,6 @@ class LoginScreen extends StatelessWidget {
             CustomSnackBar.success(
               message:
                   "You are logged in as ${(snap.value! as Map)['user_name']}",
-              textStyle: TextStyle(),
               maxLines: 3,
               textAlign: TextAlign.start,
             ),
@@ -271,7 +269,6 @@ class LoginScreen extends StatelessWidget {
             CustomSnackBar.error(
               message:
                   "No record exist for this user, Please create new account.",
-              textStyle: TextStyle(),
               maxLines: 3,
               textAlign: TextAlign.start,
             ),
@@ -286,7 +283,6 @@ class LoginScreen extends StatelessWidget {
         Overlay.of(context),
         CustomSnackBar.error(
           message: "Error Occured, Cannot be signed in.",
-          textStyle: TextStyle(),
           maxLines: 3,
           textAlign: TextAlign.start,
         ),

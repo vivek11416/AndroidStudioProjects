@@ -131,7 +131,6 @@ class RegistrationScreen extends StatelessWidget {
                               Overlay.of(context),
                               CustomSnackBar.info(
                                 message: "Name must be atleast 3 characters.",
-                                textStyle: TextStyle(),
                                 maxLines: 3,
                                 textAlign: TextAlign.start,
                               ),
@@ -142,7 +141,6 @@ class RegistrationScreen extends StatelessWidget {
                               Overlay.of(context),
                               CustomSnackBar.info(
                                 message: "Email address is not valid",
-                                textStyle: TextStyle(),
                                 maxLines: 3,
                                 textAlign: TextAlign.start,
                               ),
@@ -154,7 +152,6 @@ class RegistrationScreen extends StatelessWidget {
                               CustomSnackBar.info(
                                 message:
                                     "Password must be atleast 6 characters",
-                                textStyle: TextStyle(),
                                 maxLines: 3,
                                 textAlign: TextAlign.start,
                               ),
@@ -270,7 +267,6 @@ class RegistrationScreen extends StatelessWidget {
         Overlay.of(context),
         CustomSnackBar.error(
           message: errMsg.message.toString(),
-          textStyle: TextStyle(),
           maxLines: 3,
           textAlign: TextAlign.start,
         ),
@@ -290,7 +286,6 @@ class RegistrationScreen extends StatelessWidget {
         Overlay.of(context),
         CustomSnackBar.success(
           message: "Congratulations , your account has been created",
-          textStyle: TextStyle(),
           maxLines: 3,
           textAlign: TextAlign.start,
         ),
@@ -305,7 +300,6 @@ class RegistrationScreen extends StatelessWidget {
         Overlay.of(context),
         CustomSnackBar.error(
           message: "New User account has not been created",
-          textStyle: TextStyle(),
           maxLines: 3,
           textAlign: TextAlign.start,
         ),
