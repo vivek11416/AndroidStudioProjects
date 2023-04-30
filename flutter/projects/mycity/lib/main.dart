@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       //home: IntialStartupScreen(),
-      home: IntialStartupScreen(),
+      home: MainScreen(),
       //LoginScreen.idScreen,
       //initialRoute: IntialStartupScreen.idScreen,
       routes: {

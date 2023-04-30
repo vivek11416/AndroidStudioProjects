@@ -43,6 +43,8 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
   top_snackbar_flutter: ^3.0.0+1
   auto_size_text: ^3.0.0
+  font_awesome_flutter: ^10.4.0
+  persistent_bottom_nav_bar: ^5.0.2
 
 
 
