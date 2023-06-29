@@ -45,6 +45,7 @@ dependencies:
   auto_size_text: ^3.0.0
   font_awesome_flutter: ^10.4.0
   persistent_bottom_nav_bar: ^5.0.2
+  carousel_slider: ^4.2.1
 
 
 
