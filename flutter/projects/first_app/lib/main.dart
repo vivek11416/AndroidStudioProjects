@@ -96,7 +96,7 @@ class _PosterPainter extends CustomPainter {
   ImageInfo imageInfo;
 
   _PosterPainter(this.imageInfo);
-
+  @override
   paint(Canvas canvas, Size size) {
     if (imageInfo != null) {
       canvas.save();
@@ -120,18 +120,19 @@ class _PosterPainter extends CustomPainter {
       canvas.restore();
     }
 
-    canvas.drawRect(
-        Rect.fromLTWH(10, 40, size.width, size.height),
-        Paint()
-          ..color = Colors.red
-          ..style = PaintingStyle.stroke);
-
-    canvas.drawRect(
-        Rect.fromLTWH(20, 50, size.width, size.height),
-        Paint()
-          ..color = Colors.black
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 2);
+    [
+      canvas.drawRect(
+          Rect.fromLTWH(10, 40, size.width, size.height),
+          Paint()
+            ..color = Colors.red
+            ..style = PaintingStyle.stroke),
+      canvas.drawRect(
+          Rect.fromLTWH(20, 50, size.width, size.height),
+          Paint()
+            ..color = Colors.black
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 5)
+    ];
   }
 
   @override
